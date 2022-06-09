@@ -1,0 +1,21 @@
+{
+  "name": "lab42/psr-3-logger",
+  "description": "Logger PSR-3",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Iskander Kalimullin"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Lab42\\Logger\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "psr/log": "^1.1"
+  }
+}
