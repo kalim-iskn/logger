@@ -1,53 +1,68 @@
 <?php
 
-namespace Lab42;
+namespace Lab42\Logger;
 
+use DateTime;
+use Lab42\Logger\Repository\ClickHouseLogRepository;
 use Psr\Log\LoggerInterface;
 
 class DBLogger implements LoggerInterface
 {
+    private ClickHouseLogRepository $loggerRepo;
+
+    public function __construct()
+    {
+        $this->loggerRepo = new ClickHouseLogRepository();
+    }
+
     public function emergency($message, array $context = array())
     {
-        // TODO: Implement emergency() method.
+        $this->saveLog(LogLevelNumber::LEVEL_EMERGENCY, $message, $context);
     }
 
     public function alert($message, array $context = array())
     {
-        // TODO: Implement alert() method.
+        $this->saveLog(LogLevelNumber::LEVEL_ALERT, $message, $context);
     }
 
     public function critical($message, array $context = array())
     {
-        // TODO: Implement critical() method.
+        $this->saveLog(LogLevelNumber::LEVEL_CRITICAL, $message, $context);
     }
 
     public function error($message, array $context = array())
     {
-        // TODO: Implement error() method.
+        $this->saveLog(LogLevelNumber::LEVEL_ERROR, $message, $context);
     }
 
     public function warning($message, array $context = array())
     {
-        // TODO: Implement warning() method.
+        $this->saveLog(LogLevelNumber::LEVEL_WARNING, $message, $context);
     }
 
     public function notice($message, array $context = array())
     {
-        // TODO: Implement notice() method.
+        $this->saveLog(LogLevelNumber::LEVEL_NOTICE, $message, $context);
     }
 
     public function info($message, array $context = array())
     {
-        // TODO: Implement info() method.
+        $this->saveLog(LogLevelNumber::LEVEL_INFO, $message, $context);
     }
 
     public function debug($message, array $context = array())
     {
-        // TODO: Implement debug() method.
+        $this->saveLog(LogLevelNumber::LEVEL_DEBUG, $message, $context);
     }
 
     public function log($level, $message, array $context = array())
     {
-        // TODO: Implement log() method.
+        $this->saveLog($level, $message, $context);
+    }
+
+    private function saveLog(int $level, string $message, array $context): void
+    {
+        $log = new Log($message, $level, $context, new DateTime());
+        $this->loggerRepo->save($log);
     }
 }
